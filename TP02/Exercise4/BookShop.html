@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Shop</title>
+    <link rel="stylesheet" href="BookShop.css">  
+</head>
+
+<body>
+    <div class="container">
+        <div class="c1"> Add Book Imformation
+            <form autocomplete="off" onsubmit="onFormSubmit()"> 
+                <div style=" margin-top: 10px; margin-left: 10px;">Name : </div>
+                <input id="name" type="text" placeholder="c programming" style=" margin: 10px; width: 80%;"/>
+                <div style=" margin-top: 10px; margin-left: 10px;">Category : </div>
+                <input id="category" type="text" placeholder="coding" style=" margin: 10px; width: 80%;"/>
+                <div style=" margin-top: 10px; margin-left: 10px;">Price : </div>
+                <input id="price" type="text" placeholder="10$" style=" margin: 10px; width: 80%;"/>
+                <input style="margin-left: 10px;" type="submit" value="Add">
+            </form>
+        </div>
+
+        <div class="grid">
+            <div class="box">
+                    <input style="margin-left: 50% ;" type="submit" value="Delete">
+                    <input type="submit" value="Edit">
+                    <div class="font">
+                        <p >Name: Hi <br>
+                        Category: English <br>
+                        Price: 10$
+                        </p>
+                    </div>
+            </div>
+            <div class="box">
+                    <input style="margin-left: 50% ;" type="submit" value="Delete">
+                    <input type="submit" value="Edit">
+                    <div class="font">
+                        <p >Name: hello <br>
+                        Category: English <br>
+                        Price: 9$
+                        </p>
+                    </div>
+            </div>
+            <div class="box">
+                    <input style="margin-left: 50% ;" type="submit" value="Delete">
+                    <input type="submit" value="Edit">
+                    <div class="font">
+                        <p >Name: Bye <br>
+                        Category: English <br>
+                        Price: 11$
+                        </p>
+                    </div>
+            </div>
+            <div class="box">
+                    <input style="margin-left: 50% ;" type="submit" value="Delete">
+                    <input type="submit" value="Edit">
+                    <div class="font">
+                        <p >Name: Bye bye <br>
+                        Category: English <br>
+                        Price: 5$
+                        </p>
+                    </div>
+            </div>
+            <div class="box">
+                <input style="margin-left: 50% ;" type="submit" value="Delete">
+                <input type="submit" value="Edit">
+                <div class="font">
+                    <p >Name: Bye bye <br>
+                    Category: English <br>
+                    Price: 5$
+                    </p>
+                </div>
+            </div>
+            <div class="box">
+                <input style="margin-left: 50% ;" type="submit" value="Delete">
+                <input type="submit" value="Edit">
+                <div class="font">
+                    <p >Name: Bye bye <br>
+                    Category: English <br>
+                    Price: 5$
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="BookShop.js"></script>
+</body>
+</html>
