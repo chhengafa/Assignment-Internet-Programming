@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="book rev.png" type="image/x-icon">
+    <title>Book Shop</title>
+    <style>
+        body {
+            background-color: rgb(255, 255, 255);
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .add {
+            height: 93vh;
+            width: 300px;
+            background-color: rgb(250, 250, 250);
+            position: fixed;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .add>div {
+            text-align: center;
+            color: #ffffff;
+            background-color: rgb(243, 191, 230);
+            margin-bottom: 20px;
+            font-size: large;
+            padding-top: 10px;
+            height: 30px;
+            border-radius: 5px;
+        }
+        
+        .add input[type=text] {
+            width: 100%;
+            border: 2px solid #aaa;
+            border-radius: 4px;
+            margin: 8px 0;
+            outline: none;
+            padding: 8px;
+            box-sizing: border-box;
+            transition: .3s;
+        }
+        
+        .add input[type=text]:focus {
+            border-color: dodgerBlue;
+            box-shadow: 0 0 8px 0 dodgerBlue;
+        }
+        
+        .add .edit_book {
+            visibility: hidden;
+        }
+        
+        .add_book,
+        .edit_book {
+            background-color: rgb(243, 191, 230);
+            color: white;
+            border-style: outset;
+            border-color: white;
+            height: 25px;
+            width: 50px;
+            font: bold15px arial, sans-serif;
+            text-shadow: none;
+            height: 30px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        
+        .edit_book {
+            background-color: rgb(61, 133, 198);
+        }
+        
+        .home {
+            height: auto;
+            width: 800px;
+            top: 0px;
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: 350px;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+        
+        .home .book-info {
+            background-color: rgb(243, 191, 230);
+            text-align: center;
+            height: 35px;
+            font-size: large;
+            color: #ffffff;
+            position: sticky;
+            width: 780px;
+            margin: 10px 0 10px 10px;
+            border-radius: 5px;
+        }
+        
+        .home .items {
+            text-align: center;
+            width: 23%;
+            margin: 1%;
+            margin-left: 1%;
+            background-color: rgb(243, 191, 230);
+            border-radius: 15px;
+        }
+        
+        .items>img {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .items .name,
+        .price,
+        .category {
+            text-align: start;
+            margin-left: 10px;
+            padding-top: 10px;
+        }
+        
+        .button {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .button .editBtn,
+        .deletBtn {
+            border-radius: 5px;
+            background-color: rgb(103, 126, 146);
+            color: white;
+            border-style: outset;
+            border-color: #0066A2;
+            text-shadow: none;
+            height: 30px;
+        }
+        
+        .deletBtn {
+            margin-left: 4px;
+            background-color: rgba(239, 54, 54);
+        }
+        
+        .edit_book {
+            margin-left: -55px;
+            text-align: center;
+            width: 60px;
+        }
+        
+        .items>img {
+            height: 90px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form autocomplete="off" onsubmit="onFormSubmit()">
+            <div class="add">
+                <div class="header-add">Add new book here!</div>
+
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name_book" placeholder="c programming" onclick="if(this.placeholder == 'c programming') {this.placeholder = ''}" onBlur="if(this.placeholder == '') {this.placeholder = 'c programming'}" />
+                <label for="price">Price</label>
+                <input type="text" name="price" id="price_book" placeholder="1000" onclick="if(this.placeholder == '1000') {this.placeholder = ''}" onBlur="if(this.placeholder == '') {this.placeholder = '1000'}" />
+                <label for="category">Category</label>
+                <input type="text" name="category" id="category_book" placeholder="coding" onclick="if(this.placeholder == 'coding') {this.placeholder = ''}" onBlur="if(this.placeholder == '') {this.placeholder = 'coding'}" />
+
+
+                <button type="submit" class="add_book">Add</button>
+                <button type="submit" class="edit_book">update</button>
+
+            </div>
+        </form>
+        <div class="home" id="add_items">
+            <div class="book-info">Book</div>
+        </div>
+
+        <script>
+            var selectedRow = null;
+            let x = -1;
+            let i=0;
+            var names = [];
+            var price = [];
+            var category = [];
+            let header = document.getElementsByClassName("header-add")[0];
+
+            function onFormSubmit(e) {
+                event.preventDefault();
+                var formData = readFormData();
+                if (selectedRow === null) {
+                    insertNewRecord(formData);
+                    window.localStorage.setItem(i, JSON.stringify(formData));
+                    window.localStorage.getItem(i);
+                    i++;
+                    console.log(formData);
+                } else {
+                    updateRecord(formData);
+                }
+                resetForm();
+            }
+
+            //clear placeholder
+            document.querySelector('.add_book').placeholder = '';
+
+            //Retrieve the data
+            function readFormData() {
+                var formData = {};
+                formData["name_book"] = document.getElementById("name_book").value;
+                formData["price_book"] = document.getElementById("price_book").value;
+                formData["category_book"] = document.getElementById("category_book").value;
+
+                
+
+                return formData;
+            }
+
+            //Insert the data
+            function insertNewRecord(data) {
+                names[x + 1] = data.name_book;
+                price[x + 1] =  data.price_book;
+                category[x + 1] = data.category_book;
+
+                document.getElementById("add_items").innerHTML +=
+                    `<div class="items"><img src="book rev.png" alt="#"><div class="name" data="${data.name_book}">Name : ${data.name_book}</div><div class="price">Price : ${data.price_book} riels</div><div class="category">Category : ${data.category_book}</div><div class="button"><button id="${parseInt(x+1)}" class="editBtn" onclick="editBook(this.id)">Edit</button><button id="${parseInt(x+1)}" class="deletBtn" onclick="deleteBook(this.id)">Delete</button></div></div>`;
+                x++;1;
+
+            }
+
+            //Edit the data
+            function editBook(id) {
+                header.innerHTML = "Edit information here!";
+                header.style.backgroundColor = "rgb(61,133,198)";
+
+
+                selectedRow = id;
+                document.getElementsByClassName("edit_book")[0].style.visibility = 'visible';
+                document.getElementsByClassName("add_book")[0].style.visibility = 'hidden';
+
+                document.getElementById('name_book').value = names[id];
+                document.getElementById('price_book').value = price[id];
+                document.getElementById('category_book').value = category[id];
+            }
+
+            function updateRecord(formData) {
+                document.getElementsByClassName("name")[selectedRow].innerHTML = "Name : " + formData.name_book;
+                document.getElementsByClassName("price")[selectedRow].innerHTML = "Price : " + formData.price_book + " riels";
+                document.getElementsByClassName("category")[selectedRow].innerHTML = "Category : " + formData.category_book;
+                document.getElementsByClassName("edit_book")[0].style.visibility = 'hidden';
+                document.getElementsByClassName("add_book")[0].style.visibility = 'visible';
+                window.localStorage.setItem(selectedRow, JSON.stringify(formData));
+                window.localStorage.getItem(selectedRow);
+
+                document.getElementsByClassName("header-add")[0].innerHTML = "Add new book here!";
+                header.style.backgroundColor = "rgb(243, 191, 230)";
+                selectedRow = null;
+            }
+
+            //delete
+            function deleteBook(id) {
+                console.log(id);
+                if (confirm('Do you want to delete this record?')) {
+                    document.getElementsByClassName('items')[id].hidden = true;
+                    window.localStorage.removeItem(id);
+                }
+                resetForm();
+            }
+
+            function resetForm() {
+                document.getElementById('name_book').value = '';
+                document.getElementById('price_book').value = '';
+                document.getElementById('category_book').value = '';
+            }
+        </script>
+
+
+    </div>
+    </div>
+</body>
+
+</html>
