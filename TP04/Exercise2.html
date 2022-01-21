@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Color</title>
+    <style>
+        
+        * {
+            margin: 0; 
+            padding: 0;
+        }
+        #header{
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            padding: 50px;
+            margin: 50px;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            text-align: center;
+            border-radius: 10px;
+            width: 85%;
+        }
+        #buttonContainter{
+            width: 100%;
+            padding-top: 200px;
+            padding-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .button {
+        appearance: none;
+        background-color: transparent;
+        border: 2px solid #1A1A1A;
+        border-radius: 15px;
+        box-sizing: border-box;
+        color: #3B3B3B;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+        font-size: 16px;
+        font-weight: 600;
+        line-height: normal;
+        margin: 0;
+        min-height: 60px;
+        min-width: 0;
+        outline: none;
+        padding: 16px 24px;
+        text-align: center;
+        text-decoration: none;
+        transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        will-change: transform;
+        }
+
+        .button:disabled {
+        pointer-events: none;
+        }
+
+        .button:hover {
+        color: #fff;
+        background-color: #1A1A1A;
+        box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+        transform: translateY(-2px);
+        }
+
+        .button:active {
+        box-shadow: none;
+        transform: translateY(0);
+        }
+        #data{
+            background-color: aliceblue;
+            width: 100%;
+            max-height: 200px;
+            overflow: scroll;
+        }
+        #color{
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+        <div id="header">
+            <div style="width: 50%;">Background Color</div>
+            <div id="color"></div>
+        </div>
+        
+        <div id="buttonContainter">
+            <button class="button" onclick="c.generate()">Generate</button>
+            <button class="button" onclick="c.reset()">Reset</button>
+        </div>
+        <div id="data">
+
+        </div>
+    
+    <script>
+        class Color{
+            records=[];
+            constructor(){
+
+            }
+
+            generate(){
+                let c = new Color();
+                c.getRecord();
+                let recordColor = JSON.parse(localStorage.record)
+                recordColor.forEach(element => {
+                    this.records.push(element);
+                });
+                const randomColor = Math.floor(Math.random()*16777215).toString(16);
+                document.body.style.backgroundColor = "#" + randomColor;
+                document.getElementById("color").innerHTML="#"+randomColor;
+                this.records.push(randomColor);
+                localStorage.record=JSON.stringify(this.records);
+
+            }
+            getRecord(){
+                let html='';
+                let recordColor = JSON.parse(localStorage.record)
+                recordColor.forEach(element => {
+                    html+=`<div>#${element}</div>`
+                });
+                document.getElementById("data").innerHTML=html;
+                console.log(html);
+                let last = recordColor[recordColor.length - 1];
+                document.body.style.backgroundColor = "#" + last;
+                document.getElementById("color").innerHTML="#"+last;
+            }
+            reset(){
+                document.body.style.backgroundColor = "#" + "ffffff";
+                document.getElementById("color").innerHTML="#"+"ffffff";
+                
+            }
+        }
+        let c = new Color();
+        
+        c.getRecord();
+
+        
+        
+    </script>
+
+</body>
+</html>
