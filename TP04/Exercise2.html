@@ -120,7 +120,6 @@
                 document.getElementById("color").innerHTML="#"+randomColor;
                 this.records.push(randomColor);
                 localStorage.record=JSON.stringify(this.records);
-
             }
             getRecord(){
                 let html='';
@@ -141,7 +140,6 @@
             }
         }
         let c = new Color();
-        
         c.getRecord();
 
         
