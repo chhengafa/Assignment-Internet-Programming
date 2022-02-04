@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="input" type="text" placeholder="Enter number">
+    <button onclick="find()">Find</button>
+    <div id="display"></div>
+    <script>
+        const db1={
+            "1":{ id:1, sex: 'M', pic:'😃'},
+            "4":{ id:1, sex: 'F', pic:'😞'},
+            "6":{ id:1, sex: 'F', pic:'🙁'},
+        }
+        const db2={
+            "2":{ id:1, sex: 'F', pic:'😃'},
+            "5":{ id:1, sex: 'M', pic:'😞'},
+        }
+        const db3={
+            "3": {id: 3, sex: 'M', pic:'😭'},
+        }
+        const metaData={
+            "1":"db1",
+            "2":"db2",
+            "3":"db3",
+            "4":"db1",
+            "5":"db2",
+            "6":"db1",
+        }
+        const userData={
+            "1": {name: "Boupha", age:18, private: false},
+            "2": {name: "Chakra", age:22, private: true},
+            "3": {name: "Champey", age:17, private: false},
+            "4": {name: "Dara", age:20, private: false},
+            "5": {name: "Daevy", age:19, private: true},
+            "6": {name: "Chhorvon", age:22, private: false},
+        }
+        
+        
+
+        function find(){
+
+            var input=document.getElementById("input").value;
+            console.log(userData[input].private);
+                    if(userData[input].private==true){
+                        document.getElementById("display").innerHTML += `Name: ${userData[input].name}, Age: ${userData[input].age}`
+                    }
+                    else if(userData[input].private==false){
+                        document.getElementById("display").innerHTML="User doesn't share information 😇";
+                        console.log("bye");
+                    }
+        }
+
+    </script>
+</body>
+</html>
