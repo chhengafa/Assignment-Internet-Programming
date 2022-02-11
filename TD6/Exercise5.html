@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User list</title>
+    <style>
+        .header{
+            font-size: 30px;
+            font-weight: bold;
+            padding-left: 500px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            color: rgb(221, 162, 192);
+            text-decoration: underline;
+        }
+        th{
+            font-size: 25px;
+            background-color: rgb(221, 162, 192);
+            margin: 3px;
+            padding: 5px;
+            color: white;
+        }
+        table{
+            width: 100%; 
+        }
+        td{
+            font-size: 15px;
+            border-bottom: 2px solid rgb(221, 162, 192);
+            border-left: 2px solid rgb(221, 162, 192);
+            padding-left: 5px;
+            background-color: rgb(255, 255, 255);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">User list</div>
+    <table id="display">
+        <tr>
+            <th width="25px">No.</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Adress</th>
+            <th>Phone</th>
+            <th>Website</th>
+            <th>Company</th>
+        </tr>
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        axios.get(' https://jsonplaceholder.typicode.com/users')
+            .then(function(result){
+                for(let i=0; i<result.data.length; i++){
+                    document.getElementById("display").innerHTML +=` 
+                    <tr>           
+                    <td>${result.data[i].id}</td>
+                    <td>${result.data[i].name}</td>
+                    <td>${result.data[i].username}</td>
+                    <td>${result.data[i].email}</td>
+                    <td>${result.data[i].address.street}, ${result.data[i].address.suite}
+                        , ${result.data[i].address.city}, ${result.data[i].address.zipcode}
+                        , ${result.data[i].address.geo.lat}, ${result.data[i].address.geo.lng}</td>
+                    <td>${result.data[i].phone}</td>
+                    <td>${result.data[i].website}</td>
+                    <td>${result.data[i].company.name}, ${result.data[i].company.catchPhrase}, ${result.data[i].company.bs}</td>
+                    </tr>`
+
+                }
+                console.log(result.data.length);
+            }).catch(function(error){
+                console.log(error.result);
+            })
+
+
+    </script>
+</body>
+</html>

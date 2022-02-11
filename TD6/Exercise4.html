@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Api</title>
+    <style>
+        #display{
+            color: blue;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="display"></div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const getPosts = axios.get('https://jsonplaceholder.typicode.com/posts');
+        const getComments = axios.get('https://jsonplaceholder.typicode.com/comments');
+        const getPhotos = axios.get('https://jsonplaceholder.typicode.com/photos');
+
+        Promise.all([getPosts, getComments, getPhotos]).then((result) => {
+        // console.log("data is loaded", result);
+        document.getElementById("Display").innerHTML = "data is loaded ";
+        }).catch(() => {
+        // Display error
+        })
+    </script>
+</body>
+</html>

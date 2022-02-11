@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5promises</title>
+</head>
+<body>
+    <h1 id="p1"></h1>
+    <h2 id="p2"></h2>
+    <h3 id="p3"></h3>
+    <h4 id="p4"></h4>
+    <b id="p5"></b>
+    <div id="done"></div>
+
+    <script>
+        const Promise1 = new Promise(function(myResolve, myReject) {
+        setTimeout(function(){ myResolve("Hello "); }, 1000);
+        });
+        const Promise2 = new Promise(function(myResolve, myReject) {
+        setTimeout(function(){ myResolve("My "); }, 2000);
+        });
+        const Promise3 = new Promise(function(myResolve, myReject) {
+        setTimeout(function(){ myResolve("Name "); }, 3000);
+        });
+        const Promise4 = new Promise(function(myResolve, myReject) {
+        setTimeout(function(){ myResolve("Is "); }, 4000);
+        });
+        const Promise5 = new Promise(function(myResolve, myReject) {
+        setTimeout(function(){ myResolve("Afa "); }, 5000);
+        });
+        const Taskdone = new Promise(function(myResolve, myReject) {
+        setTimeout(function(){ myResolve("All tasks done! "); }, 6000);
+        });
+
+        Promise1.then(function(value) {
+        document.getElementById("p1").innerHTML = value;
+        });
+        Promise2.then(function(value) {
+        document.getElementById("p2").innerHTML = value;
+        });
+        Promise3.then(function(value) {
+        document.getElementById("p3").innerHTML = value;
+        });
+        Promise4.then(function(value) {
+        document.getElementById("p4").innerHTML = value;
+        });
+        Promise5.then(function(value) {
+        document.getElementById("p5").innerHTML = value;
+        });
+        Taskdone.then(function(value) {
+        document.getElementById("done").innerHTML = value;
+        });
+    </script>
+</body>
+</html>
