@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrollable</title>
+    <style>
+        .container{
+            width: 400px;
+            height: 600px;
+            background-color: rgb(255, 255, 255);
+            padding: 5px;
+        }
+        #scrollable{
+            overflow-y:scroll ;
+            width: 100%;
+            height: 100%;
+        }
+        .item{
+            height: 100px;
+            background-color: rgb(173, 201, 230);
+            padding: 5px;
+            border-radius: 5px;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div onscroll="onScroll()" id="scrollable">
+
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        page=1;
+        limit=20;
+        axios.get(`https://api.instantwebtools.net/v1/passenger?page=${page}&size=${limit}`)
+            .then(async(result) =>{
+                for(let i=0; i<result.data.data.length; i++){
+                    let name=await result.data.data[i].airline[0].name;
+                    let country=await result.data.data[i].airline[0].country;
+                    let nam=await result.data.data[i].name;
+                    document.getElementById("scrollable").innerHTML +=` 
+          
+                        <div class="item">✈️: ${name}- ${country} <br> 🙂: ${nam}</div>`
+
+                    //console.log("hello",name,nam,country);
+                }
+        })
+        const scroller = document.getElementById("scrollable");
+        scroller.addEventListener("scroll",onScroll);
+        function onScroll(evt){
+            const clientHeight = scroller.clientHeight;
+            const scrollHeight= scroller.scrollHeight;
+            const scrollTop= scroller.scrollTop;
+            console.log(clientHeight + scrollTop , scrollHeight);
+            if(clientHeight + scrollTop >= scrollHeight-10){
+
+                console.log("load more...");
+            }
+        }
+
+
+    </script>
+ 
+    </script>
+</body>
+</html>
