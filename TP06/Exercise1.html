@@ -29,41 +29,49 @@
 <body>
 
     <div class="container">
-        <div onscroll="onScroll()" id="scrollable">
-
-            </div>
+        <div onscroll="onScroll()" id="scrollable"></div>
+        <div id="spinner"></div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-
-        page=1;
-        limit=20;
-        axios.get(`https://api.instantwebtools.net/v1/passenger?page=${page}&size=${limit}`)
-            .then(async(result) =>{
-                for(let i=0; i<result.data.data.length; i++){
-                    let name=await result.data.data[i].airline[0].name;
-                    let country=await result.data.data[i].airline[0].country;
-                    let nam=await result.data.data[i].name;
-                    document.getElementById("scrollable").innerHTML +=` 
-          
-                        <div class="item">✈️: ${name}- ${country} <br> 🙂: ${nam}</div>`
-
-                    //console.log("hello",name,nam,country);
-                }
-        })
+        page=0;
+        limit=6;
+        const laodData =()=>{
+            loadMore=true;
+            axios.get(`https://api.instantwebtools.net/v1/passenger?page=${page}&size=${limit}`)
+                .then(async(result) =>{
+                    loadMore=false;
+                    page++;
+                    console.log("loaded");
+                    for(let i=0; i<result.data.data.length; i++){
+                        let name=await result.data.data[i].airline[0].name;
+                        let country=await result.data.data[i].airline[0].country;
+                        let nam=await result.data.data[i].name;
+                        document.getElementById("scrollable").innerHTML +=`
+                            ${page} 
+                            <div class="item">✈️: ${name}- ${country} <br> 🙂: ${nam}</div>`
+                        
+                    }
+            })
+        }
         const scroller = document.getElementById("scrollable");
         scroller.addEventListener("scroll",onScroll);
+        let loadMore =false;
         function onScroll(evt){
             const clientHeight = scroller.clientHeight;
             const scrollHeight= scroller.scrollHeight;
             const scrollTop= scroller.scrollTop;
-            console.log(clientHeight + scrollTop , scrollHeight);
-            if(clientHeight + scrollTop >= scrollHeight-10){
 
+            if(clientHeight + scrollTop >= scrollHeight-10 && !loadMore){ 
+                setTimeout(() => {
+                    laodData();
+                }, 3000);  
+                
                 console.log("load more...");
             }
         }
+        laodData();
 
 
     </script>
